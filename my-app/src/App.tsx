@@ -12,14 +12,16 @@ function App() {
 
   // State variable for the search input.
   const [Input, setInput] = useState("");
-  const [infoJson, setinfoJson] = useState({ results: [{ title: "", image: "" }] });
+  const [infoJson, setinfoJson] = useState({ results: [{ title: "", image: "", summary:"" }] });
 
   const RECIPE_BASE_URL = "https://api.spoonacular.com/recipes/complexSearch?";
+
+  // Needs a working key.
   const KEY_URL = "apiKey=cb1c464d94f142c08b156c5beddade8b";
 
   // Search function uses axios to make api call.
   function search() {
-    axios.get(RECIPE_BASE_URL + KEY_URL + "&query=" + Input).then((res) => {
+    axios.get(RECIPE_BASE_URL + KEY_URL + "&addRecipeInformation=true&query=" + Input).then((res) => {
       setinfoJson(res.data);
     });
   }
@@ -36,7 +38,7 @@ function App() {
 
 
     <div className="Homepage">
-      <h1>Recipe Renovator 2.0</h1>
+      <h1>Recipe Renovator</h1>
 
 
       <div className="Searchbar">
@@ -67,7 +69,7 @@ function App() {
         <p>you searched for {Input}</p>
 
         <div id="recipe-result">
-          These will be the recipe results.
+          Recipe Results
           {/* <p>{infoJson.results[0].title}</p>
           <img src={infoJson.results[0].image}></img> */}
           <List input={infoJson} />
